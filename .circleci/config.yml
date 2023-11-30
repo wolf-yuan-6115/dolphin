@@ -20,15 +20,16 @@ jobs:
           command: docker buildx create --name builder --bootstrap --use
       - run:
           name: Check docker compose version
-          command: docker compose version
+          command: docker-compose version
       - run:
           name: Build Docker image via compose
-          command: docker compose build
+          command: docker-compose build
       - run:
           name: Push to Docker Hub
-          command: docker compose push
+          command: docker-compose push
         
 workflows:
   build:
     jobs:
-      - build
+      - build:
+          name: "Build and push Docker image"
