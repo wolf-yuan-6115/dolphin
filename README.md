@@ -123,7 +123,7 @@ or
 -v /path/to/your/host/folder:/home/dolphin/space
 ```
 
-| ⚠️ Warnin                                        |
+| ⚠️ Warning                                       |
 |-------------------------------------------------|
 | You can't mount two directory at the same time! |
 
