@@ -1,21 +1,48 @@
 services:
-  base:
+  base-alpine:
     build: 
       context: ./
-      dockerfile: ./base/Dockerfile
+      dockerfile: ./base/Dockerfile.alpine
       platforms:
         - linux/amd64
         - linux/arm64
         - linux/arm/v7
-    image: wolfyuan/dolphin:base
-  nodejs:
+      tags:
+        - wolfyuan/dolphin:base-alpine
+        - wolfyuan/dolphin:base
+  base-ubuntu:
     build:
       context: ./
-      dockerfile: ./nodejs/Dockerfile
+      dockerfile: ./base/Dockerfile.ubuntu
       platforms:
         - linux/amd64
         - linux/arm64
         - linux/arm/v7
-    image: wolfyuan/dolphin:node
+      tags:
+        - wolfyuan/dolphin:base-ubuntu
+
+  node-alpine:
+    build:
+      context: ./
+      dockerfile: ./nodejs/Dockerfile.alpine
+      platforms:
+        - linux/amd64
+        - linux/arm64
+        - linux/arm/v7
+      tags:
+        - wolfyuan/dolphin:node-alpine
+        - wolfyuan/dolphin:node
     depends_on:
-      - base
+      - base-alpine
+  node-ubuntu:
+    build:
+      context: ./
+      dockerfile: ./nodejs/Dockerfile.ubuntu
+      platforms:
+        - linux/amd64
+        - linux/arm64
+        - linux/arm/v7
+      tags:
+        - wolfyuan/dolphin:node-ubuntu
+    depends_on:
+      - base-ubuntu
