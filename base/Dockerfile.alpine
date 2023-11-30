@@ -11,6 +11,7 @@ LABEL org.label-schema.vcs-url="https://gitlab.com/wolf-yuan/dolphin"
 ARG S6_OVERLAY_VERSION=3.1.6.2
 
 RUN echo "[+] Installing base dependencies" \
+  && apk upgrade \
   && apk add --update --no-cache --virtual base-dependencies \
   bash \
   ca-certificates \
@@ -23,6 +24,7 @@ RUN echo "[+] Installing base dependencies" \
   git \
   xz \
   openssh \
+  libstdc++ \
   && export PLATFORM=$(uname -m | sed 's/armv7l/arm/') \
   && echo "[+] Downloading s6 overlay" \
   && curl -fsSL https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz -o /tmp/s6-overlay-noarch.tar.xz \
@@ -42,7 +44,10 @@ RUN echo "[+] Installing base dependencies" \
   && echo "[+] Creating bashrc" \
   && touch ~/.bashrc
 
-ENV S6_VERBOSITY=1 S6_BEHAVIOUR_IF_STAGE2_FAILS=2 SHELL=/bin/bash
+ENV S6_VERBOSITY=1 \
+  S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
+  S6_CMD_WAIT_FOR_SERVICES_MAXTIME=0 \
+  SHELL=/bin/bash
 COPY --chmod=755 ./base/root /
 
 ENTRYPOINT ["/init"]
