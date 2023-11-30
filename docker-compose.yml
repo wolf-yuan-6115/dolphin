@@ -1,3 +1,4 @@
+
 services:
   base-alpine:
     build: 
@@ -7,9 +8,7 @@ services:
         - linux/amd64
         - linux/arm64
         - linux/arm/v7
-      tags:
-        - wolfyuan/dolphin:base-alpine
-        - wolfyuan/dolphin:base
+    image: wolfyuan/dolphin:base-alpine
   base-ubuntu:
     build:
       context: ./
@@ -18,8 +17,12 @@ services:
         - linux/amd64
         - linux/arm64
         - linux/arm/v7
-      tags:
-        - wolfyuan/dolphin:base-ubuntu
+    image: wolfyuan/dolphin:base-ubuntu
+  base:
+    extends: base-alpine
+    image: wolfyuan/dolphin:base
+    depends_on:
+      - base-alpine
 
   node-alpine:
     build:
@@ -29,9 +32,7 @@ services:
         - linux/amd64
         - linux/arm64
         - linux/arm/v7
-      tags:
-        - wolfyuan/dolphin:node-alpine
-        - wolfyuan/dolphin:node
+    image: wolfyuan/dolphin:node-alpine
     depends_on:
       - base-alpine
   node-ubuntu:
@@ -42,7 +43,11 @@ services:
         - linux/amd64
         - linux/arm64
         - linux/arm/v7
-      tags:
-        - wolfyuan/dolphin:node-ubuntu
+    image: wolfyuan/dolphin:node-ubuntu
     depends_on:
       - base-ubuntu
+  node:
+    extends: node-alpine
+    image: wolfyuan/dolphin:node
+    depends_on:
+      - node-alpine
