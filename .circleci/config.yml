@@ -10,8 +10,7 @@ jobs:
     resource_class: large
     steps:
       - checkout
-      - docker/install-docker-compose:
-          version: v2.21.0
+      - docker/install-docker-tools
       - run:
           name: Login to Docker Hub
           command: docker login -u ${DOCKER_USER} -p ${DOCKER_TOKEN}
