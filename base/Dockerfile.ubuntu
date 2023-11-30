@@ -19,7 +19,7 @@ RUN echo "[+] Installing base dependencies" \
   jq \
   tzdata \
   git \
-  xz-utils \
+  xz \
   && echo "[+] Generating locales" \
   && locale-gen en_US.UTF-8 \
   && export PLATFORM=$(uname -m | sed 's/armv7l/arm/') \
@@ -42,6 +42,6 @@ RUN echo "[+] Installing base dependencies" \
   && touch ~/.bashrc
 
 ENV S6_VERBOSITY=1
-COPY ./root /
+COPY ./base/root /
 
 ENTRYPOINT ["/init"]

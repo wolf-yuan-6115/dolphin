@@ -42,6 +42,6 @@ RUN echo "[+] Installing base dependencies" \
   && touch ~/.bashrc
 
 ENV S6_VERBOSITY=1
-COPY ./root /
+COPY ./base/root /
 
 ENTRYPOINT ["/init"]
