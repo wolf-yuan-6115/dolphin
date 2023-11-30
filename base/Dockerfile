@@ -18,7 +18,8 @@ RUN echo "[+] Installing base dependencies" \
   coreutils \
   curl \
   tzdata \
-  && export PLATFORM=$(uname -m) \
+  gcompat \
+  && export PLATFORM=$(uname -m | sed 's/armv7l/armhf/') \
   && echo "[+] Downloading s6 overlay" \
   && curl -fsSL https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz -o /tmp/s6-overlay-noarch.tar.xz \
   && curl -fsSL https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-${PLATFORM}.tar.xz -o /tmp/s6-overlay-${PLATFORM}.tar.xz \
