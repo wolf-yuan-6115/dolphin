@@ -7,7 +7,7 @@ export NVM_DIR="$HOME/.nvm"
 if [[ -f "/home/dolphin/space/package.json" ]]; then
   cd /home/dolphin/space
 
-  if [[ -n $(jq -r '.scripts.build // empty' "$json_file") ]]; then
+  if [[ -n $(jq -r '.scripts.build // empty' "/home/dolphin/space/package.json") ]]; then
     echo "[+] Running build script"
 
     if [[ -f "./pnpm-lock.yaml" ]]; then
