@@ -1,4 +1,9 @@
 # syntax = devthefuture/dockerfile-x
 FROM ./base/Dockerfile.ubuntu
 
+ARG DEBIAN_FRONTEND="noninteractive"
+RUN apt-get install -y \
+  build-essential \
+  python3
+
 COPY --chmod=755 ./nodejs/root /

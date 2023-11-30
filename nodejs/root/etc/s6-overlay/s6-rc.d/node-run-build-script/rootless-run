@@ -1,0 +1,50 @@
+#!/usr/bin/with-contenv bash
+
+export HOME="/home/dolphin"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+if [[ -f "/home/dolphin/space/package.json" ]]; then
+  cd /home/dolphin/space
+
+  if [[ -n $(jq -r '.scripts.build // empty' "$json_file") ]]; then
+    echo "[+] Running build script"
+
+    if [[ -f "./pnpm-lock.yaml" ]]; then
+      echo "[+] Running 'pnpm run build'"
+      pnpm run build
+
+      if [ $? -ne 0 ]; then
+        echo
+        echo "[x] Running 'pnpm run build' failed"
+        /run/s6/basedir/bin/halt
+      else
+        echo "[+] Build script succeed"
+      fi
+    elif [[ -f "./yarn.lock" ]]; then
+      echo "[+] Running 'pnpm run build'"
+      yarn run build
+
+      if [ $? -ne 0 ]; then
+        echo
+        echo "[x] Running 'pnpm build' failed"
+        /run/s6/basedir/bin/halt
+      else
+        echo "[+] Build script succeed"
+      fi
+    else
+      echo "[+] Running 'npm run build'"
+      npm run build
+
+      if [ $? -ne 0 ]; then
+        echo
+        echo "[x] Running 'npm run build' failed"
+        /run/s6/basedir/bin/halt
+      else
+        echo "[+] Build script succeed"
+      fi
+    fi
+  else
+    echo "[-] No build script found"
+  fi
+fi
