@@ -23,7 +23,7 @@ jobs:
           command: docker-compose version
       - run:
           name: Build and push Docker image via compose
-          command: docker-compose build --push
+          command: docker-compose build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --push
         
 workflows:
   build:
