@@ -30,8 +30,6 @@ services:
       dockerfile: ./nodejs/Dockerfile.alpine
       platforms:
         - linux/amd64
-        - linux/arm64
-        - linux/arm/v7
     image: wolfyuan/dolphin:node-alpine
     depends_on:
       - base-alpine
