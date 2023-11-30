@@ -11,7 +11,12 @@ if [[ $(grep -E '^(ID)=' /etc/os-release) == "ID=alpine" ]]; then
   nvm_get_arch() { nvm_echo x64-musl; } # Needed to build the download URL
 fi
 
-if [[ -f "~/space/.nvmrc" ]]; then
+
+if [[ ! -z "${NODE_VERSION} "]]; then
+  echo "[+] Found NODE_VERSION"
+  nvm install "${NODE_VERSION}"
+  nvm use "${NODE_VERSION}"
+elif [[ -f "~/space/.nvmrc" ]]; then
   echo "[+] Found .nvmrc"
   cd ~/space
   nvm use
