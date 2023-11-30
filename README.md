@@ -3,9 +3,18 @@
 
 > Dolphin is still under heavy development, please create a issue if you face any bugs or request a feature
 
+Dolphin is a cool container image that prepared everything for you!
+
+✨ Features:
+- Container running with `s6-overlay`
+- Modular design
+- Support wide vairity of language
+- Multi base image and CPU architecture
+- Code runs in rootless process
+
 ## 🏃 Running image
 
-```sh
+```bash
 docker run --name dolphin-box -d \
   -e GIT_URL="https://domain.com" \
   --restart unless-stopped \
@@ -51,6 +60,8 @@ flowchart LR
     B --> D(Extended image script)
 ```
 
+### Image specific options
+
 <details>
 <summary>node</summary>
 
@@ -87,9 +98,39 @@ flowchart TB
 
 > Diagram is a *little* bit complex
 
-| 📝 Note                                |
-|----------------------------------------|
+| 📝 Note                                  |
+|------------------------------------------|
 | In package manager: `pnpm > yarn > npm`  |
 | In node version: `NODE_VERSION > .nvmrc` |
 
 </details>
+
+## 💾 Persist data inside container
+
+You can mount two type of directory to Dolphin container:
+- `/home/dolphin`: Contain your code (space), and other runtime binaries installation like `nvm`, `pyenv`
+  > Use this when you want to save more bandwidth
+- `/home/dolphin/space`
+  > Use this when you want to prevent rebuilding your project
+
+To mount directory, append this arguments when starting Docker container:
+
+```bash
+-v /path/to/your/host/folder:/home/dolphin
+```
+or
+```bash
+-v /path/to/your/host/folder:/home/dolphin/space
+```
+
+| ⚠️ Warnin                                        |
+|-------------------------------------------------|
+| You can't mount two directory at the same time! |
+
+## 🎩 RedHat Podman support
+
+*It SHOULD work, maybe*
+
+## 📽️ Graphics card support
+
+I haven't tried it, but your application will be ran in rootless environment, it might not work.
