@@ -1,0 +1,32 @@
+#!/usr/bin/with-contenv bash
+
+export HOME="/home/dolphin"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+cd /home/dolphin/space
+
+echo "[+] Starting service"
+if [[ ! -z "${NODE_START_SCRIPT}" ]]; then
+  echo "[+] Found NODE_START_SCRIPT"
+  ${NODE_START_SCRIPT}
+elif [[ -f "/home/dolphin/space/package.json" ]]; then
+  if [[ -n $(jq -r '.scripts.start // empty' "/home/dolphin/space/package.json") ]]; then
+    if [[ -f "./pnpm-lock.yaml" ]]; then
+      echo "[+] Running 'pnpm run start'"
+      pnpm run start
+    elif [[ -f "./yarn.lock" ]]; then
+      echo "[+] Running 'pnpm run start'"
+      yarn run start
+    else
+      echo "[+] Running 'npm run start'"
+      npm run start
+    fi
+  else
+    echo "[x] No start script found in package.json or NODE_START_SCRIPT"
+    exit 1
+  fi
+else
+  echo "[x] No start script found in package.json or NODE_START_SCRIPT"
+  exit 1
+fi

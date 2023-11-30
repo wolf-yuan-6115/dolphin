@@ -1,0 +1,4 @@
+#!/usr/bin/with-contenv bash
+
+echo "[+] Node.js init done."
+echo
