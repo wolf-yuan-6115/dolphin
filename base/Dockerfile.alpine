@@ -42,7 +42,7 @@ RUN echo "[+] Installing base dependencies" \
   && echo "[+] Creating bashrc" \
   && touch ~/.bashrc
 
-ENV S6_VERBOSITY=1 SHELL=/bin/bash
+ENV S6_VERBOSITY=1 S6_BEHAVIOUR_IF_STAGE2_FAILS=2 SHELL=/bin/bash
 COPY --chmod=755 ./base/root /
 
 ENTRYPOINT ["/init"]
