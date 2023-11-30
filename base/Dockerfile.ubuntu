@@ -19,7 +19,7 @@ RUN echo "[+] Installing base dependencies" \
   jq \
   tzdata \
   git \
-  xz \
+  xz-utils \
   && echo "[+] Generating locales" \
   && locale-gen en_US.UTF-8 \
   && export PLATFORM=$(uname -m | sed 's/armv7l/arm/') \
