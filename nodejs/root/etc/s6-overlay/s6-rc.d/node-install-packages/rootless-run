@@ -1,0 +1,58 @@
+#!/usr/bin/with-contenv bash
+
+export HOME="/home/dolphin"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+if [[ -f "/home/dolphin/space/package.json" ]]; then
+  echo "[+] Found package.json"
+
+  cd /home/dolphin/space
+  if [[ -f "./pnpm-lock.yaml" ]]; then
+    echo "[+] Installing packages via 'pnpm'"
+    npm install --global --loglevel warn pnpm
+    pnpm install --frozen-lockfile
+
+    if [ $? -ne 0 ]; then
+      echo
+      echo "[x] Installing packages via 'pnpm' failed"
+    else
+      echo "[+] Installed packages via 'pnpm' succeed"
+    fi
+  elif [[ -f "./yarn.lock" ]]; then
+    echo "[+] Installing packages via 'yarn'"
+    npm install --global --loglevel warn yarn
+    yarn install --frozen-lockfile
+
+    if [ $? -ne 0 ]; then
+      echo
+      echo "[x] Installing packages via 'yarn' failed"
+    else
+      echo "[+] Installed packages via 'yarn' succeed"
+    fi
+  elif [[ -f "./package-lock.json" ]]; then
+    echo "[+] Installing packages via 'npm'"
+    npm ci
+
+    if [ $? -ne 0 ]; then
+      echo
+      echo "[x] Installing packages via 'pnpm' failed"
+    else
+      echo "[+] Installed packages via 'yarn' succeed"
+    fi
+  else
+    echo "[-] Package lock file not found or unsupported package manager"
+    echo "[-] Using 'pnpm' to install packages."
+    pnpm install
+
+    if [ $? -ne 0 ]; then
+      echo
+      echo "[x] Installing packages via 'pnpm' failed"
+    else
+      echo "[+] Installed packages via 'pnpm' succeed"
+    fi
+    rm pnpm-lock.yaml
+  fi
+else
+  echo "[-] No package.json found, skipping..."
+fi

@@ -3,5 +3,7 @@
 echo "[+] Preparing work directories"
 
 mkdir -p /home/dolphin/space
-
 chown dolphin:dolphin -R /home/dolphin/
+
+touch /home/dolphin/.bashrc
+chown dolphin:dolphin /home/dolphin/.bashrc

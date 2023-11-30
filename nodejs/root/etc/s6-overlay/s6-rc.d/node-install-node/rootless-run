@@ -1,0 +1,24 @@
+#!/usr/bin/with-contenv bash
+
+export HOME="/home/dolphin"
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# https://github.com/nvm-sh/nvm/issues/1102
+if [[ $(grep -E '^(ID)=' /etc/os-release) == "ID=alpine" ]]; then
+  export NVM_NODEJS_ORG_MIRROR=https://unofficial-builds.nodejs.org/download/release # Set up unofficial builds
+  export NVM_IOJS_ORG_MIRROR=https://example.com # (Optional) Disable IOJS from appearing on ls-remote
+  nvm_get_arch() { nvm_echo x64-musl; } # Needed to build the download URL
+fi
+
+if [[ -f "~/space/.nvmrc" ]]; then
+  echo "[+] Found .nvmrc"
+  cd ~/space
+  nvm use
+  echo "[+] Installed node version $(node -v)"
+else
+  echo "[-] No .nvmrc found, installing Node.js LTS"
+  nvm install --lts
+  nvm use --lts
+  echo "[+] Installed node version $(node -v)"
+fi
