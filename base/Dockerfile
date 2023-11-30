@@ -1,15 +1,15 @@
 # syntax = devthefuture/dockerfile-x
-FROM alpine:3
+FROM alpine:latest
 
 ARG S6_OVERLAY_VERSION=3.1.6.2
 
 RUN apk add --update --no-cache --virtual base-dependencies \
-  build-base \
-  gcc \
-  wget \
+  alphine-release \
+  bash \
+  ca-certificates \
+  coreutils \
   curl \
-  git \
-  g++
+  tzdata
 
 RUN export PLATFORM=$(uname -m) \
   && echo "Downloading s6 overlay" \
