@@ -15,3 +15,5 @@ services:
         - linux/amd64
         - linux/arm64
     image: wolfyuan/dolphin:node
+    depends_on:
+      - base
