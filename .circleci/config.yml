@@ -10,8 +10,7 @@ jobs:
     resource_class: medium
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - setup_remote_docker
       - docker/install-docker-compose:
           version: v2.21.0
       - run:
