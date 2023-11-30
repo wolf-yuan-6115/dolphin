@@ -9,8 +9,7 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - setup_remote_docker
       - docker/install-docker-tools
       - run:
           name: Login to Docker Hub
