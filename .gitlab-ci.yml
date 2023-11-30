@@ -13,6 +13,7 @@ build-image:
   tags:
     - shiba
   script:
+    - apk add --update --no-cache git
     - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
     - docker buildx create --name builder --bootstrap --use
     - docker compose version
