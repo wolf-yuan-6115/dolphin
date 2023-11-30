@@ -5,9 +5,8 @@ orbs:
 
 jobs:
   build-docker-image:
-    machine:
-      image: ubuntu-2204:current
-    resource_class: large
+    machine: true
+    resource_class: wolf-yuan-6115/shiba
     steps:
       - checkout
       - docker/install-docker-tools
