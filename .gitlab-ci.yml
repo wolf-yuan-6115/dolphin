@@ -1,0 +1,23 @@
+default:
+  image: docker:dind
+  services:
+    - docker:dind
+  before_script:
+    - docker info
+
+stages:
+  - prepare
+  - build
+
+prepare-env:
+  stage: prepare
+  script:
+    - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
+    - docker buildx create --name builder --bootstrap --use
+
+build-image:
+  stage: build
+  script:
+    - docker compose version
+    - docker-compose build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --push
+
