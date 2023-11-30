@@ -24,7 +24,9 @@ docker run --name dolphin-box -d \
 
 Command breakdown:
 `-e GIT_URL="https://domain.com"` - Environment variables for controlling container, see [here](#🌎️-environment-variables-and-workflow) for full list
+
 `--restart unless-stopped` - Restart your container when it fail or you rebooted your machine, unless you stop it by yourself
+
 `docker.io/wolfyuan/dolphin:node` - Container image, where `node` represents to image that's designed for this language, see [here](#📦️-container-images) for full list
 
 ## 📦️ Container images
@@ -39,6 +41,7 @@ Command breakdown:
 ### Tagging format
 
 Images are tagged with this format: `[Image Tag]-[Image Variants]`
+
 For example, `node` image with `ubuntu` base will be: `node-ubuntu`
 
 ## 🌎️ Environment variables and workflow
