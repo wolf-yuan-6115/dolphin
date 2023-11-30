@@ -6,18 +6,14 @@ default:
     - docker info
 
 stages:
-  - prepare
   - build
-
-prepare-env:
-  stage: prepare
-  script:
-    - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
-    - docker buildx create --name builder --bootstrap --use
 
 build-image:
   stage: build
+  tags:
+    - shiba
   script:
+    - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
+    - docker buildx create --name builder --bootstrap --use
     - docker compose version
     - docker-compose build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --push
-
