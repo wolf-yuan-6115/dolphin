@@ -23,6 +23,11 @@ jobs:
       - run:
           name: Build and push Docker image via compose
           command: docker-compose build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --push
+      - docker/update-description
+          docker-username: DOCKER_USER
+          docker-password: DOCKER_TOKEN
+          image: wolfyuan/dolphin
+          
         
 workflows:
   build:
