@@ -46,6 +46,7 @@ if [[ -f "/home/dolphin/space/package.json" ]]; then
   else
     echo "[-] Package lock file not found or unsupported package manager"
     echo "[-] Using 'pnpm' to install packages."
+    npm install --global --loglevel error pnpm
     pnpm install
 
     if [ $? -ne 0 ]; then
