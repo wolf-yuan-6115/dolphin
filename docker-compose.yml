@@ -1,0 +1,17 @@
+services:
+  base:
+    build: 
+      context: ./
+      dockerfile: ./base/Dockerfile
+      platforms:
+        - linux/amd64
+        - linux/arm64
+    image: wolfyuan/dolphin:base
+  nodejs:
+    build:
+      context: ./
+      dockerfile: ./nodejs/Dockerfile
+      platforms:
+        - linux/amd64
+        - linux/arm64
+    image: wolfyuan/dolphin:node
