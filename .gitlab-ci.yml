@@ -18,4 +18,3 @@ build-image:
     - docker compose version
     - docker compose build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --push
     - docker buildx rm builder
-    
