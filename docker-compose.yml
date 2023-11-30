@@ -22,7 +22,7 @@ services:
     extends: base-alpine
     image: wolfyuan/dolphin:base
     depends_on:
-      - base-alpine
+      - base-ubuntu
 
   node-alpine:
     build:
@@ -48,4 +48,4 @@ services:
     extends: node-alpine
     image: wolfyuan/dolphin:node
     depends_on:
-      - node-alpine
+      - node-ubuntu
