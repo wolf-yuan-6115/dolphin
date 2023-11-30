@@ -1,3 +1,7 @@
 #!/usr/bin/with-contenv bash
 
-echo "Hello world!"
+echo "[+] Preparing work directories"
+
+mkdir -p /home/dolphin/space
+
+chown dolphin:dolphin -R /home/dolphin/

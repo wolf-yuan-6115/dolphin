@@ -22,6 +22,7 @@ RUN echo "[+] Installing base dependencies" \
   jq \
   git \
   xz \
+  openssh \
   && export PLATFORM=$(uname -m | sed 's/armv7l/arm/') \
   && echo "[+] Downloading s6 overlay" \
   && curl -fsSL https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz -o /tmp/s6-overlay-noarch.tar.xz \
@@ -41,7 +42,7 @@ RUN echo "[+] Installing base dependencies" \
   && echo "[+] Creating bashrc" \
   && touch ~/.bashrc
 
-ENV S6_VERBOSITY=1
+ENV S6_VERBOSITY=1 SHELL=/bin/bash
 COPY --chmod=755 ./base/root /
 
 ENTRYPOINT ["/init"]

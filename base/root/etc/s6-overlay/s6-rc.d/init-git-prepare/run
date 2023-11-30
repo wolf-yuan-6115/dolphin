@@ -1,0 +1,10 @@
+#!/usr/bin/with-contenv bash
+
+if [[ ! -z "${GIT_URL}" ]]; then
+  echo "[+] Found GIT_URL environment variable, cloning..."
+  
+  export HOME="/home/dolphin"
+  exec s6-setuidgid dolphin git clone ${GIT_URL} /home/dolphin/space
+else
+  echo "[-] GIT_URL environment variable not found, skipping..."
+fi
