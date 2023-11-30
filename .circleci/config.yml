@@ -11,6 +11,7 @@ jobs:
     steps:
       - checkout
       - docker/install-docker-tools
+      - docker/install-docker-credential-helper
       - docker/configure-docker-credentials-store
       - run:
           name: Login to Docker Hub
