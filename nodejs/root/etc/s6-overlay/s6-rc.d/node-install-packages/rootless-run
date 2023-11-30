@@ -10,7 +10,7 @@ if [[ -f "/home/dolphin/space/package.json" ]]; then
   cd /home/dolphin/space
   if [[ -f "./pnpm-lock.yaml" ]]; then
     echo "[+] Installing packages via 'pnpm'"
-    npm install --global --loglevel warn pnpm
+    npm install --global --loglevel error pnpm
     pnpm install --frozen-lockfile
 
     if [ $? -ne 0 ]; then
@@ -22,7 +22,7 @@ if [[ -f "/home/dolphin/space/package.json" ]]; then
     fi
   elif [[ -f "./yarn.lock" ]]; then
     echo "[+] Installing packages via 'yarn'"
-    npm install --global --loglevel warn yarn
+    npm install --global --loglevel error yarn
     yarn install --frozen-lockfile
 
     if [ $? -ne 0 ]; then
