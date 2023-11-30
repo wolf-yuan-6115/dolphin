@@ -1,4 +1,4 @@
 # syntax = devthefuture/dockerfile-x
 FROM ./base/Dockerfile
 
-RUN apk add --update --no-cache npm
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
