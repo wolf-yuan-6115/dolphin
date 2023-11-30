@@ -22,11 +22,8 @@ jobs:
           name: Check docker compose version
           command: docker-compose version
       - run:
-          name: Build Docker image via compose
-          command: docker-compose build
-      - run:
-          name: Push to Docker Hub
-          command: docker-compose push
+          name: Build and push Docker image via compose
+          command: docker-compose build --push
         
 workflows:
   build:
