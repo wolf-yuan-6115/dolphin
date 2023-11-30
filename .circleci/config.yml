@@ -4,7 +4,7 @@ orbs:
   docker: circleci/docker@2.4.0
 
 jobs:
-  build:
+  build-docker-image:
     docker:
       - image: cimg/base:stable
     steps:
@@ -28,5 +28,5 @@ jobs:
 workflows:
   build:
     jobs:
-      - build:
+      - build-docker-image:
           name: "Build and push Docker image"
