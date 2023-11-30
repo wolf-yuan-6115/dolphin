@@ -5,12 +5,11 @@ orbs:
 
 jobs:
   build-docker-image:
-    docker:
-      - image: cimg/base:stable
+    machine:
+      image: ubuntu-2204:current
     resource_class: large
     steps:
       - checkout
-      - setup_remote_docker
       - docker/install-docker-compose:
           version: v2.21.0
       - run:
