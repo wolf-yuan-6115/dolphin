@@ -1,6 +1,13 @@
 # syntax = devthefuture/dockerfile-x
 FROM alpine:latest
 
+ARG BUILD_DATE
+LABEL org.label-schema.schema-version="1.0"
+LABEL org.label-schema.build-date=$BUILD_DATE
+LABEL org.label-schema.name="wolf-yuan/dolphin"
+LABEL org.label-schema.description="Multi usage container image for hosting various applications"
+LABEL org.label-schema.vcs-url="https://gitlab.com/wolf-yuan/dolphin"
+
 ARG S6_OVERLAY_VERSION=3.1.6.2
 
 RUN echo "[+] Installing base dependencies" \
