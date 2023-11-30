@@ -11,17 +11,17 @@ jobs:
       - checkout
       - docker/install-docker-tools
       - run:
-        name: Login to Docker Hub
-        command: docker login -u ${DOCKER_USER} -p ${DOCKER_TOKEN}
+          name: Login to Docker Hub
+          command: docker login -u ${DOCKER_USER} -p ${DOCKER_TOKEN}
       - run:
-        name: Setup builder
-        command: docker buildx create --name builder --bootstrap --use
+          name: Setup builder
+          command: docker buildx create --name builder --bootstrap --use
       - run:
-        name: Build Docker image via compose
-        command: docker compose build
+          name: Build Docker image via compose
+          command: docker compose build
       - run:
-        name: Push to Docker Hub
-        command: docker compose push
+          name: Push to Docker Hub
+          command: docker compose push
         
 workflows:
   build:
