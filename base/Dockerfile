@@ -18,6 +18,10 @@ RUN echo "[+] Installing base dependencies" \
   coreutils \
   curl \
   tzdata \
+  && echo "[+] Installing glibc" \
+  && curl -fsSL https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub -o /etc/apk/keys/sgerrand.rsa.pub \
+  && curl -fsSL https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.35-r1/glibc-2.35-r1.apk -o /tmp/glibc-2.35-r1.apk \
+  && apk add /tmp/glibc-2.35-r1.apk \
   && export PLATFORM=$(uname -m) \
   && echo "[+] Downloading s6 overlay" \
   && curl -fsSL https://github.com/just-containers/s6-overlay/releases/download/v${S6_OVERLAY_VERSION}/s6-overlay-noarch.tar.xz -o /tmp/s6-overlay-noarch.tar.xz \
