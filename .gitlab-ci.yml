@@ -12,6 +12,9 @@ build-image:
   stage: build
   tags:
     - shiba
+  except:
+    changes:
+      - "**/*.md"
   script:
     - apk add --update --no-cache git
     - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
