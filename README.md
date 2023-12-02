@@ -33,10 +33,10 @@ Command breakdown:
 
 > Most image supports `arm` based CPU unless mentioned in note.
 
-| Image name |                       Description                      |      Variants      |   Tag  |                     Note                    |
-|:----------:|:------------------------------------------------------:|:------------------:|:------:|:-------------------------------------------:|
-|   Node.js  |  Image with necessary software to run Node.js software | `alpine`, `ubuntu` | `node` | `alpine` does not support `arm64`, `armv7l` |
-|    Base    | Base image, you should NOT use this image when running | `alpine`, `ubuntu` | `base` |                      -                      |
+| Image name |                       Description                      |      Variants      |   Tag  |                 Architecture                 |
+| :--------: | :----------------------------------------------------: | :----------------: | :----: | :------------------------------------------: |
+|   Node.js  |  Image with necessary software to run Node.js software | `alpine`, `ubuntu` | `node` | `amd64`, `arm64 (ubuntu)`, `arm/v7 (ubuntu)` |
+|    Base    | Base image, you should NOT use this image when running | `alpine`, `ubuntu` | `base` |           `amd64`, `arm64`,`arm/v7`          |
 
 ### Tagging format
 
