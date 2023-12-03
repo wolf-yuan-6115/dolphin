@@ -20,3 +20,4 @@ Additional notes:
 
 Notes for developing new container image:
 - Alpine based images uses `musl` instead of `glibc`, support them at your best. (Most software have `musl` build for x86 systems.)
+- After base image init done, `init-done` service will be ran, when your extended image done initalizing environment, you should call `extend-init-done`
