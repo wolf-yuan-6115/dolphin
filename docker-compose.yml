@@ -23,6 +23,11 @@ services:
     image: wolfyuan/dolphin:base
     depends_on:
       - base-ubuntu
+  base-commit:
+    extends: base-ubuntu
+    image: wolfyuan/dolphin:base-${GIT_SHA}
+    depends_on:
+      - base-ubuntu
 
   node-alpine:
     build:
@@ -45,7 +50,12 @@ services:
     depends_on:
       - base-ubuntu
   node:
-    extends: node-alpine
+    extends: node-ubuntu
     image: wolfyuan/dolphin:node
+    depends_on:
+      - node-ubuntu
+  node-commit:
+    extends: node-ubuntu
+    image: wolfyuan/dolphin:node-${GIT_SHA}
     depends_on:
       - node-ubuntu

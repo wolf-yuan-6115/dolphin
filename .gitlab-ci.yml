@@ -24,5 +24,6 @@ build-image:
     - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
     - docker buildx create --name builder --bootstrap --use
     - docker compose version
+    - echo "GIT_SHA=$(git rev-parse --short HEAD)" >> ./.env
     - docker compose build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --push
     - docker buildx rm builder
