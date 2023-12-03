@@ -37,6 +37,19 @@ docker run --name dolphin-box -d \
 Command breakdown:
 `-e GIT_URL="https://domain.com"` - Environment variables for controlling container, see [here](#🌎️-environment-variables-and-workflow) for full list
 
+> You can add multiple variables, like:
+>
+> `-e GIT_URL="https://domain.com" -e SYSTEM_PACKAGES="automake"`
+>
+> So Whole command will be
+>  ```bash
+> docker run --name dolphin-box -d \
+>   -e GIT_URL="https://domain.com" \
+>   -e SYSTEM_PACKAGES="automake" \
+>   --restart unless-stopped \
+>   docker.io/wolfyuan/dolphin:node
+> ```
+
 `--restart unless-stopped` - Restart your container when it fail or you rebooted your machine, unless you stop it by yourself
 
 `docker.io/wolfyuan/dolphin:node` - Container image, where `node` represents to image that's designed for this language, see [here](#📦️-container-images) for full list
@@ -66,20 +79,25 @@ For example, pulling `node` tag will pull `node-ubuntu` image
 
 Environment variables:
 
-| Environment variables name |               Description               |
-|:--------------------------:|:---------------------------------------:|
-|          `GIT_URL`         | Git repo to clone when container starts |
+| Environment variables name |                      Description                     |
+| :------------------------: | :--------------------------------------------------: |
+|      `SYSTEM_PACKAGES`     | Additional packages to install when container starts |
+|          `GIT_URL`         |        Git repo to clone when container starts       |
 
 Workflow:
 
-```mermaid
-flowchart LR
-    A[Container start] --> B(Prepare directories)
-    B -->|SYSTEM_PACKAGES exists| C(Install system packages)
-    B -->|SYSTEM_PACKAGES not exists| D(Clone repo)
-    C --> D
-    D --> E(Extended image script)
-```
+1. Container starts
+2. Prepare runner folders
+3. Add additional system packages
+4. Clone git repo with `GIT_URL`
+
+| 📝 Note                                                                                             |
+| --------------------------------------------------------------------------------------------------- |
+| You can install additional system packages via `SYSTEM_PACKAGES` variable                           |
+| For example, installing `automake` on base system, just set `SYSTEM_PACKAGES` with value `automake` |
+| When installing multiple system packages, seperate them by spaces, for example, `automake cmake`    |
+| Alpine based image will use `apk` to install packages                                               |
+| Ubuntu based image will use `apt-get` to install packages                                           |
 
 ### Image specific options
 
@@ -95,29 +113,16 @@ Environment variables:
 
 Workflow:
 
-```mermaid
-flowchart TB
-    A[Extended image script] --> B(Install nvm)
-    B --> C(Install node.js)
-    C -->|.nvmrc or NODE_VERSION exists| D(Install Node.js with version in .nvmrc or NODE_VERSION)
-    C -->|.nvmrc not found| E(Install Node.js LTS)
-    D --> F(Install package)
-    E --> F(Install package)
-    F -->|pnpm-lock.yaml exists| G(Use pnpm to install packages)
-    F -->|yarn.lock exists| H(Use yarn to install packages)
-    F -->|package-lock.json exists| I(Use npm to install packages)
-    F -->|non of them were found| G(Use pnpm to install packages)
-    G -->|build script found in package.json| J(Run build script)
-    H -->|build script found in package.json| J(Run build script)
-    I -->|build script found in package.json| J(Run build script)
-    G --> K(Run start script)
-    H --> K(Run start script)
-    I --> K(Run start script)
-    J -->|start script found in package.json| K(Run start script)
-    J --> L(Run NODE_START_SCRIPT)
-```
+1. Container start
+2. [Base image initialize](#applies-to-every-image)
+3. Install Node.js via `NODE_VERSION` or `.nvmrc` in your project
+4. Install npm packages via detected package manager
+5. Run build script via detected package manager if presents
+6. Start Node.js process via `NODE_START_SCRIPT` or script in `package.json` via detected package manager
 
-> Diagram is a *little* bit complex
+| 📝 Note                                           |
+| ------------------------------------------------- |
+| Supported package managers: `pnpm`, `yarn`, `npm` |
 
 | 📝 Note                                  |
 |------------------------------------------|
