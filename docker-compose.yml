@@ -18,14 +18,20 @@ services:
         - linux/arm64
         - linux/arm/v7
     image: wolfyuan/dolphin:base-ubuntu
-  base:
+  base-alpine-commit:
     extends: base-alpine
-    image: wolfyuan/dolphin:base
+    image: wolfyuan/dolphin:base-alpine-${GIT_SHA}
+    depends_on:
+      - base-alpine
+  base-ubuntu-commit:
+    extends: base-ubuntu
+    image: wolfyuan/dolphin:base-ubuntu-${GIT_SHA}
     depends_on:
       - base-ubuntu
-  base-commit:
+
+  base:
     extends: base-ubuntu
-    image: wolfyuan/dolphin:base-${GIT_SHA}
+    image: wolfyuan/dolphin:base
     depends_on:
       - base-ubuntu
 
@@ -49,13 +55,19 @@ services:
     image: wolfyuan/dolphin:node-ubuntu
     depends_on:
       - base-ubuntu
+  node-alpine-commit:
+    extends: node-ubuntu
+    image: wolfyuan/dolphin:node-alpine-${GIT_SHA}
+    depends_on:
+      - node-alpine
+  node-ubuntu-commit:
+    extends: node-ubuntu
+    image: wolfyuan/dolphin:node-ubuntu-${GIT_SHA}
+    depends_on:
+      - node-ubuntu
+
   node:
     extends: node-ubuntu
     image: wolfyuan/dolphin:node
-    depends_on:
-      - node-ubuntu
-  node-commit:
-    extends: node-ubuntu
-    image: wolfyuan/dolphin:node-${GIT_SHA}
     depends_on:
       - node-ubuntu
