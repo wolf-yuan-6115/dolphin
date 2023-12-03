@@ -12,6 +12,18 @@ Dolphin is a cool container image that prepared everything for you!
 - Multi base image and CPU architecture
 - Code runs in rootless process
 
+---
+
+- [🏃 Running image](#🏃-running-image)
+- [📦️ Container images](#📦️-container-images)
+  - [Tagging format](#tagging-format)
+- [🌎️ Environment variables and workflow](#🌎️-environment-variables-and-workflow)
+  - [Variables that applies to every image](#applies-to-every-image)
+  - [Image specific options](#image-specific-options)
+- [💾 Persist data inside container](#💾-persist-data-inside-container)
+- [🎩 RedHat Podman support](#🎩-redhat-podman-support)
+- [📽️ Graphics card support](#📽️-graphics-card-support)
+
 ## 🏃 Running image
 
 ```bash
@@ -62,9 +74,11 @@ Workflow:
 
 ```mermaid
 flowchart LR
-    A[Container start] -->|GIT_URL exists| B(Clone GIT_URL)
-    A[Container start] -->|GIT_URL not exists| D(Extended image script)
-    B --> D(Extended image script)
+    A[Container start] --> B(Prepare directories)
+    B -->|SYSTEM_PACKAGES exists| C(Install system packages)
+    B -->|SYSTEM_PACKAGES not exists| D(Clone repo)
+    C --> D
+    D --> E(Extended image script)
 ```
 
 ### Image specific options
