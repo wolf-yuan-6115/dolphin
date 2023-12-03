@@ -3,7 +3,6 @@ FROM ./base/Dockerfile.ubuntu
 
 ARG DEBIAN_FRONTEND="noninteractive"
 RUN apt-get install -y \
-  build-essential \
   python3 \
   && apt-get clean
 
