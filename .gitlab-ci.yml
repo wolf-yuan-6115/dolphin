@@ -13,10 +13,6 @@ build-image:
   tags:
     - shiba
   except:
-    changes:
-      - "**/*.md"
-      - .gitlab-ci.yml
-      - LICENSE
     variables:
       - '$CI_PIPELINE_SOURCE == "merge_request_event"'
   script:
