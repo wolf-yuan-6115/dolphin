@@ -1,16 +1,16 @@
 # 🐬 Dolphin
-## All in one solution for hosting your code
+## All-in-one solution for hosting your code
 
-> Dolphin is still under heavy development, please create a issue if you face any bugs or request a feature
+> Dolphin is still under heavy development, please create an issue if you face any bugs or request a feature
 
 Dolphin is a cool container image that prepared everything for you!
 
 ✨ Features:
 - Container running with `s6-overlay`
 - Modular design
-- Support wide vairity of language
-- Multi base image and CPU architecture
-- Code runs in rootless process
+- Support a wide variety of language
+- Multi-base image and CPU architecture
+- Code runs in a rootless process
 
 ---
 
@@ -18,7 +18,7 @@ Dolphin is a cool container image that prepared everything for you!
 - [📦️ Container images](#📦️-container-images)
   - [Tagging format](#tagging-format)
 - [🌎️ Environment variables and workflow](#🌎️-environment-variables-and-workflow)
-  - [Variables that applies to every image](#applies-to-every-image)
+  - [Variables that apply to every image](#applies-to-every-image)
   - [Image specific options](#image-specific-options)
 - [💾 Persist data inside container](#💾-persist-data-inside-container)
 - [🎩 RedHat Podman support](#🎩-redhat-podman-support)
@@ -35,13 +35,13 @@ docker run --name dolphin-box -d \
 ---
 
 Command breakdown:
-`-e GIT_URL="https://domain.com"` - Environment variables for controlling container, see [here](#🌎️-environment-variables-and-workflow) for full list
+`-e GIT_URL="https://domain.com"` - Environment variables for controlling container, see [here](#🌎️-environment-variables-and-workflow) for a full list
 
 > You can add multiple variables, like:
 >
 > `-e GIT_URL="https://domain.com" -e SYSTEM_PACKAGES="automake"`
 >
-> So Whole command will be
+> So the whole command will be
 >  ```bash
 > docker run --name dolphin-box -d \
 >   -e GIT_URL="https://domain.com" \
@@ -50,13 +50,13 @@ Command breakdown:
 >   docker.io/wolfyuan/dolphin:node
 > ```
 
-`--restart unless-stopped` - Restart your container when it fail or you rebooted your machine, unless you stop it by yourself
+`--restart unless-stopped` - Restart your container when it fails or you reboot your machine unless you stop it by yourself
 
 `docker.io/wolfyuan/dolphin:node` - Container image, where `node` represents to image that's designed for this language, see [here](#📦️-container-images) for full list
 
 ## 📦️ Container images
 
-> Most image supports `arm` based CPU unless mentioned in note.
+> Most image supports `arm` based CPU unless mentioned in the note.
 
 | Image name |                       Description                      |      Variants      |   Tag  |                 Architecture                 |
 | :--------: | :----------------------------------------------------: | :----------------: | :----: | :------------------------------------------: |
@@ -67,11 +67,11 @@ Command breakdown:
 
 Images are tagged with this format: `[Image Tag]-[Image Variants]`
 
-For example, `node` image with `ubuntu` base will be: `node-ubuntu`
+For example, the `node` image with `ubuntu` base will be: `node-ubuntu`
 
-If you don't specify image variants, it will pull `ubuntu` base
+If you don't specify image variants, it will pull the `ubuntu` base
 
-For example, pulling `node` tag will pull `node-ubuntu` image
+For example, pulling the `node` tag will pull the `node-ubuntu` image
 
 ## 🌎️ Environment variables and workflow
 
@@ -79,10 +79,11 @@ For example, pulling `node` tag will pull `node-ubuntu` image
 
 Environment variables:
 
-| Environment variables name |                      Description                     |
-| :------------------------: | :--------------------------------------------------: |
-|      `SYSTEM_PACKAGES`     | Additional packages to install when container starts |
-|          `GIT_URL`         |        Git repo to clone when container starts       |
+
+| Environment variables name |                        Description                       |
+| :------------------------: | :------------------------------------------------------: |
+|      `SYSTEM_PACKAGES`     | Additional packages to install when the container starts |
+|          `GIT_URL`         |        Git repo to clone when the container starts       |
 
 Workflow:
 
@@ -91,15 +92,15 @@ Workflow:
 3. Add additional system packages
 4. Clone git repo with `GIT_URL`
 
-| 📝 Note                                                                                             |
-| --------------------------------------------------------------------------------------------------- |
-| You can install additional system packages via `SYSTEM_PACKAGES` variable                           |
-| For example, installing `automake` on base system, just set `SYSTEM_PACKAGES` with value `automake` |
-| When installing multiple system packages, seperate them by spaces, for example, `automake cmake`    |
-| Alpine based image will use `apk` to install packages                                               |
-| Ubuntu based image will use `apt-get` to install packages                                           |
+| 📝 Note                                                                                                     |
+| ----------------------------------------------------------------------------------------------------------- |
+| You can install additional system packages via the `SYSTEM_PACKAGES` variable                               |
+| For example, installing `automake` on the base system, just set `SYSTEM_PACKAGES` with the value `automake` |
+| When installing multiple system packages, separate them by spaces, for example, `automake cmake`            |
+| Alpine-based image will use `apk` to install packages                                                       |
+| Ubuntu-based image will use `apt-get` to install packages                                                   |
 
-### Image specific options
+### Image-specific options
 
 <details>
 <summary>node</summary>
@@ -116,9 +117,9 @@ Workflow:
 1. Container start
 2. [Base image initialize](#applies-to-every-image)
 3. Install Node.js via `NODE_VERSION` or `.nvmrc` in your project
-4. Install npm packages via detected package manager
+4. Install npm packages via the detected package manager
 5. Run build script via detected package manager if presents
-6. Start Node.js process via `NODE_START_SCRIPT` or script in `package.json` via detected package manager
+6. Start the Node.js process via `NODE_START_SCRIPT` or script in `package.json` via the detected package manager
 
 | 📝 Note                                           |
 | ------------------------------------------------- |
@@ -133,13 +134,13 @@ Workflow:
 
 ## 💾 Persist data inside container
 
-You can mount two type of directory to Dolphin container:
+You can mount two types of directory to the Dolphin container:
 - `/home/dolphin`: Contain your code (space), and other runtime binaries installation like `nvm`, `pyenv`
   > Use this when you want to save more bandwidth
 - `/home/dolphin/space`
   > Use this when you want to prevent rebuilding your project
 
-To mount directory, append this arguments when starting Docker container:
+To mount the directory, append these arguments when starting the Docker container:
 
 ```bash
 -v /path/to/your/host/folder:/home/dolphin
@@ -149,9 +150,9 @@ or
 -v /path/to/your/host/folder:/home/dolphin/space
 ```
 
-| ⚠️ Warning                                       |
-|-------------------------------------------------|
-| You can't mount two directory at the same time! |
+| ⚠️ Warning                                         |
+| ------------------------------------------------- |
+| You can't mount two directories at the same time! |
 
 ## 🎩 RedHat Podman support
 
@@ -159,4 +160,4 @@ or
 
 ## 📽️ Graphics card support
 
-I haven't tried it, but your application will be ran in rootless environment, it might not work.
+I haven't tried it, but your application will be run in a rootless environment, so it might not work.
