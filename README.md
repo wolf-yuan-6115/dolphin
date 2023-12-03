@@ -44,6 +44,10 @@ Images are tagged with this format: `[Image Tag]-[Image Variants]`
 
 For example, `node` image with `ubuntu` base will be: `node-ubuntu`
 
+If you don't specify image variants, it will pull `ubuntu` base
+
+For example, pulling `node` tag will pull `node-ubuntu` image
+
 ## 🌎️ Environment variables and workflow
 
 ### Applies to every image:
