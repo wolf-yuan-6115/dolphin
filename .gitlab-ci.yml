@@ -12,9 +12,9 @@ build-image:
   stage: build
   tags:
     - shiba
-  except:
-    variables:
-      - '$CI_PIPELINE_SOURCE == "merge_request_event"'
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
   script:
     - apk add --update --no-cache git
     - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
