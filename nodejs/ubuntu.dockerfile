@@ -1,5 +1,5 @@
 # syntax = devthefuture/dockerfile-x
-FROM ./base/Dockerfile.ubuntu
+FROM ./base/ubuntu.dockerfile
 
 ARG DEBIAN_FRONTEND="noninteractive"
 RUN apt-get install -y \

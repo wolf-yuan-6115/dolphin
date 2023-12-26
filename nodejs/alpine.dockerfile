@@ -1,5 +1,5 @@
 # syntax = devthefuture/dockerfile-x
-FROM ./base/Dockerfile.alpine
+FROM ./base/alpine.dockerfile
 
 RUN apk add --update --no-cache --virtual build-dependencies \
   python3
