@@ -17,7 +17,8 @@ build-image:
   script:
     - apk add --update --no-cache git
     - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
-    - docker buildx create --name builder --bootstrap --use
+    - docker context create builder-context
+    - docker buildx create --name builder --driver docker-container --bootstrap --use builder-context
     - docker compose version
     - echo "GIT_SHA=$(git rev-parse --short HEAD)" >> ./.env
     - docker compose build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --push
