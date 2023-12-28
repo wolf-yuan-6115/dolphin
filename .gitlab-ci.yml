@@ -1,5 +1,5 @@
 default:
-  image: docker:dind
+  image: docker:latest
   services:
     - docker:dind
   before_script:
