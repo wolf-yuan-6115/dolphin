@@ -13,8 +13,7 @@ build-image:
   tags:
     - shiba
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-      when: never
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
   script:
     - apk add --update --no-cache git
     - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
