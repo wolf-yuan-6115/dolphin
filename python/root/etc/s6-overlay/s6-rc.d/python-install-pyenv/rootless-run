@@ -1,0 +1,10 @@
+#!/usr/bin/with-contenv bash
+
+export HOME="/home/dolphin"
+export PYENV_ROOT="$HOME/.pyenv"
+if [[ -d "$PYENV_ROOT" ]]; then
+  echo "[+] pyenv is already installed"
+else
+  echo "[+] Installing nvm"
+  curl https://pyenv.run | bash
+fi

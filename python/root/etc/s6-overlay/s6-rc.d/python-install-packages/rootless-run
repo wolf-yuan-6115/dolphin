@@ -1,0 +1,23 @@
+#!/usr/bin/with-contenv bash
+
+cd /home/dolphin/space
+export HOME="/home/dolphin"
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+if [[ -f "/home/dolphin/space/requirements.txt" ]]; then
+  echo "[+] Found requirements.txt"
+  
+  pip install -r requirements.txt
+else
+  echo "[-] No requirements.txt found, skipping..."
+fi
+
+if [[ ! -z "${PYTHON_PACKAGES}" ]]; then
+  echo "[+] Found PYTHON_PACKAGES"
+
+  eval "pip install ${PYTHON_PACKAGES}"
+else
+  echo "[-] No PYTHON_PACKAGES found, skipping..."
+fi

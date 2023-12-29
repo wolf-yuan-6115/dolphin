@@ -1,0 +1,24 @@
+#!/usr/bin/with-contenv bash
+
+export HOME="/home/dolphin"
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+if [[ ! -z "${PYTHON_VERSION}" ]]; then
+  echo "[+] Found PYTHON_VERSION"
+  pyenv install "${PYTHON_VERSION}"
+  pyenv global "${PYTHON_VERSION}"
+  echo "[+] Install python version $(python --version)"
+elif [[ -f "~/space/.python-version" ]]; then
+  echo "[+] Found .python-version"
+  cd ~/space
+  pyenv install $(cat ~/space/.python-version)
+  pyenv global $(cat ~/space/.python-version)
+  echo "[+] Install python version $(python --version)"
+else
+  echo "[-] No Python version config found, installing Python latest"
+  pyenv install 3
+  pyenv global 3
+  echo "[+] Install python version $(python --version)"
+fi

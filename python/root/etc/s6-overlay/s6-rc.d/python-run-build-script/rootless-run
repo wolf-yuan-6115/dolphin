@@ -1,0 +1,11 @@
+#!/usr/bin/with-contenv bash
+
+export HOME="/home/dolphin"
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+if [[ ! -z "${PYTHON_BUILD_SCRIPT}" ]]; then
+  echo "[+] Found PYTHON_BUILD_SCRIPT"
+  eval "${PYTHON_BUILD_SCRIPT}"
+fi
