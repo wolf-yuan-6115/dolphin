@@ -132,6 +132,36 @@ Workflow:
 
 </details>
 
+<details>
+<summary>python</summary>
+
+Environment variables:
+
+| Environment variables name |                        Description                        |
+| :------------------------: | :-------------------------------------------------------: |
+|      `PYTHON_VERSION`      |   Python version to install, overrides `.python-version`  |
+|    `PYTHON_BUILD_SCRIPT`   |       Script to run after installing Python packages      |
+|    `PYTHON_START_SCRIPT`   | Script to run when container finished running init script |
+|     `PYTHON_START_FILE`    | Script to run when container finished running init script |
+
+Workflow:
+
+1. Container start
+2. [Base image initialize](#applies-to-every-image)
+3. Install Python via `PYTHON_VERSION` or `.python-version` in your project
+4. Install python packages via `pip`
+5. Start the Python process via `PYTHON_START_SCRIPT` and the script in `PYTHON_START_FILE` with command `python3`
+
+| 📝 Note                                           |
+| ------------------------------------------------- |
+| When `PYTHON_START_SCRIPT` and `PYTHON_START_FILE` both exists, it will run `PYTHON_START_SCRIPT` first, and run `PYTHON_START_FILE` when previous script has finished |
+
+| 📝 Note                                  |
+|------------------------------------------|
+| In Python version: `PYTHON_VERSION > .python-version` |
+
+</details>
+
 ## 💾 Persist data inside container
 
 You can mount two types of directory to the Dolphin container:
