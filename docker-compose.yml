@@ -11,6 +11,8 @@ services:
       tags:
         - wolfyuan/dolphin:base-alpine
         - wolfyuan/dolphin:base-alpine-${GIT_SHA}
+        - registry.gitlab.com/wolf-yuan/dolphin:base-alpine
+        - registry.gitlab.com/wolf-yuan/dolphin:base-alpine-${GIT_SHA}
   base-ubuntu:
     build:
       context: ./
@@ -23,6 +25,8 @@ services:
         - wolfyuan/dolphin:base-ubuntu
         - wolfyuan/dolphin:base-ubuntu-${GIT_SHA}
         - wolfyuan/dolphin:base
+        - registry.gitlab.com/wolf-yuan/dolphin:base-ubuntu
+        - registry.gitlab.com/wolf-yuan/dolphin:base
 
   node-alpine:
     build:
@@ -33,6 +37,7 @@ services:
       tags:
         - wolfyuan/dolphin:node-alpine
         - wolfyuan/dolphin:node-alpine-${GIT_SHA}
+        - registry.gitlab.com/wolf-yuan/dolphin:node-alpine
     depends_on:
       - base-alpine
   node-ubuntu:
@@ -47,6 +52,8 @@ services:
         - wolfyuan/dolphin:node-ubuntu
         - wolfyuan/dolphin:node-ubuntu-${GIT_SHA}
         - wolfyuan/dolphin:node
+        - registry.gitlab.com/wolf-yuan/dolphin:node-ubuntu
+        - registry.gitlab.com/wolf-yuan/dolphin:node
     depends_on:
       - base-ubuntu
 
@@ -59,6 +66,7 @@ services:
       tags:
         - wolfyuan/dolphin:python-alpine
         - wolfyuan/dolphin:python-alpine-${GIT_SHA}
+        - registry.gitlab.com/wolf-yuan/dolphin:python-alpine
     depends_on:
       - base-alpine
   python-ubuntu:
@@ -73,5 +81,7 @@ services:
         - wolfyuan/dolphin:python-ubuntu
         - wolfyuan/dolphin:python-ubuntu-${GIT_SHA}
         - wolfyuan/dolphin:python
+        - registry.gitlab.com/wolf-yuan/dolphin:python-ubuntu
+        - registry.gitlab.com/wolf-yuan/dolphin:python
     depends_on:
       - base-ubuntu
