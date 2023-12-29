@@ -18,6 +18,7 @@ build-image:
   script:
     - apk add --update --no-cache git
     - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
+    - docker login -u $GITLAB_USER -p $GITLAB_TOKEN registry.gitlab.com
     - docker context create builder-context
     - docker buildx create --name builder --driver docker-container --bootstrap --use builder-context
     - docker compose version
