@@ -8,7 +8,9 @@ services:
         - linux/amd64
         - linux/arm64
         - linux/arm/v7
-    image: wolfyuan/dolphin:base-alpine
+      tags:
+        - wolfyuan/dolphin:base-alpine
+        - wolfyuan/dolphin:base-alpine-${GIT_SHA}
   base-ubuntu:
     build:
       context: ./
@@ -17,23 +19,10 @@ services:
         - linux/amd64
         - linux/arm64
         - linux/arm/v7
-    image: wolfyuan/dolphin:base-ubuntu
-  base-alpine-commit:
-    extends: base-alpine
-    image: wolfyuan/dolphin:base-alpine-${GIT_SHA}
-    depends_on:
-      - base-alpine
-  base-ubuntu-commit:
-    extends: base-ubuntu
-    image: wolfyuan/dolphin:base-ubuntu-${GIT_SHA}
-    depends_on:
-      - base-ubuntu
-
-  base:
-    extends: base-ubuntu
-    image: wolfyuan/dolphin:base
-    depends_on:
-      - base-ubuntu
+      tags:
+        - wolfyuan/dolphin:base-ubuntu
+        - wolfyuan/dolphin:base-ubuntu-${GIT_SHA}
+        - wolfyuan/dolphin:base
 
   node-alpine:
     build:
@@ -41,7 +30,9 @@ services:
       dockerfile: ./nodejs/alpine.dockerfile
       platforms:
         - linux/amd64
-    image: wolfyuan/dolphin:node-alpine
+      tags:
+        - wolfyuan/dolphin:node-alpine
+        - wolfyuan/dolphin:node-alpine-${GIT_SHA}
     depends_on:
       - base-alpine
   node-ubuntu:
@@ -52,25 +43,12 @@ services:
         - linux/amd64
         - linux/arm64
         - linux/arm/v7
-    image: wolfyuan/dolphin:node-ubuntu
+      tags:
+        - wolfyuan/dolphin:node-ubuntu
+        - wolfyuan/dolphin:node-ubuntu-${GIT_SHA}
+        - wolfyuan/dolphin:node
     depends_on:
       - base-ubuntu
-  node-alpine-commit:
-    extends: node-alpine
-    image: wolfyuan/dolphin:node-alpine-${GIT_SHA}
-    depends_on:
-      - node-alpine
-  node-ubuntu-commit:
-    extends: node-ubuntu
-    image: wolfyuan/dolphin:node-ubuntu-${GIT_SHA}
-    depends_on:
-      - node-ubuntu
-
-  node:
-    extends: node-ubuntu
-    image: wolfyuan/dolphin:node
-    depends_on:
-      - node-ubuntu
 
   python-alpine:
     build:
@@ -78,7 +56,9 @@ services:
       dockerfile: ./python/alpine.dockerfile
       platforms:
         - linux/amd64
-    image: wolfyuan/dolphin:python-alpine
+      tags:
+        - wolfyuan/dolphin:python-alpine
+        - wolfyuan/dolphin:python-alpine-${GIT_SHA}
     depends_on:
       - base-alpine
   python-ubuntu:
@@ -89,22 +69,9 @@ services:
         - linux/amd64
         - linux/arm64
         - linux/arm/v7
-    image: wolfyuan/dolphin:python-ubuntu
+      tags:
+        - wolfyuan/dolphin:python-ubuntu
+        - wolfyuan/dolphin:python-ubuntu-${GIT_SHA}
+        - wolfyuan/dolphin:python
     depends_on:
       - base-ubuntu
-  python-alpine-commit:
-    extends: python-ubuntu
-    image: wolfyuan/dolphin:python-alpine-${GIT_SHA}
-    depends_on:
-      - python-alpine
-  python-ubuntu-commit:
-    extends: python-ubuntu
-    image: wolfyuan/dolphin:python-ubuntu-${GIT_SHA}
-    depends_on:
-      - python-ubuntu
-
-  python:
-    extends: python-ubuntu
-    image: wolfyuan/dolphin:python
-    depends_on:
-      - python-ubuntu
