@@ -152,13 +152,18 @@ Workflow:
 4. Install python packages via `pip`
 5. Start the Python process via `PYTHON_START_SCRIPT` and the script in `PYTHON_START_FILE` with command `python3`
 
-| 📝 Note                                           |
-| ------------------------------------------------- |
-| When `PYTHON_START_SCRIPT` and `PYTHON_START_FILE` both exists, it will run `PYTHON_START_SCRIPT` first, and run `PYTHON_START_FILE` when previous script has finished |
+| ⚠️ Warning                                                                                                                                                                          |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Due to how `pyenv` switch Python version, it's recommended to presist your container storage, see [Presist data inside container](#💾-persist-data-inside-container) for more info |
 
-| 📝 Note                                  |
-|------------------------------------------|
+| 📝 Note                                                                                                                                                                 |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| When `PYTHON_START_SCRIPT` and `PYTHON_START_FILE` both exists, it will run `PYTHON_START_SCRIPT` first, and run `PYTHON_START_FILE` after previous script has finished |
+
+| 📝 Note                                               |
+| ----------------------------------------------------- |
 | In Python version: `PYTHON_VERSION > .python-version` |
+
 
 </details>
 
