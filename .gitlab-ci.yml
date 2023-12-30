@@ -13,12 +13,13 @@ build-image:
   tags:
     - shiba
   rules:
-    - if: $CI_COMMIT_TAG
-    - if: $CI_COMMIT_BRANCH
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH
+      when: never
   script:
     - apk add --update --no-cache git
     - docker login -u $DOCKER_USER -p $DOCKER_TOKEN
-    - docker login -u $GITLAB_USER -p $GITLAB_TOKEN registry.gitlab.com
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD registry.gitlab.com
     - docker context create builder-context
     - docker buildx create --name builder --driver docker-container --bootstrap --use builder-context
     - docker compose version
