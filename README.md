@@ -14,15 +14,15 @@ Dolphin is a cool container image that prepared everything for you!
 
 ---
 
-- [🏃 Running image](#🏃-running-image)
-- [📦️ Container images](#📦️-container-images)
+- [🏃 Running image](#-running-image)
+- [📦️ Container images](#-container-images)
   - [Tagging format](#tagging-format)
-- [🌎️ Environment variables and workflow](#🌎️-environment-variables-and-workflow)
+- [🌎️ Environment variables and workflow](#-environment-variables-and-workflow)
   - [Variables that apply to every image](#applies-to-every-image)
   - [Image specific options](#image-specific-options)
-- [💾 Persist data inside container](#💾-persist-data-inside-container)
-- [🎩 RedHat Podman support](#🎩-redhat-podman-support)
-- [📽️ Graphics card support](#📽️-graphics-card-support)
+- [💾 Persist data inside container](#-persist-data-inside-container)
+- [🎩 RedHat Podman support](#-redhat-podman-support)
+- [📽️ Graphics card support](#-graphics-card-support)
 
 ## 🏃 Running image
 
@@ -35,7 +35,7 @@ docker run --name dolphin-box -d \
 ---
 
 Command breakdown:
-`-e GIT_URL="https://domain.com"` - Environment variables for controlling container, see [here](#🌎️-environment-variables-and-workflow) for a full list
+`-e GIT_URL="https://domain.com"` - Environment variables for controlling container, see [here](#-environment-variables-and-workflow) for a full list
 
 > You can add multiple variables, like:
 >
@@ -52,7 +52,7 @@ Command breakdown:
 
 `--restart unless-stopped` - Restart your container when it fails or you reboot your machine unless you stop it by yourself
 
-`docker.io/wolfyuan/dolphin:node` - Container image, where `node` represents to image that's designed for this language, see [here](#📦️-container-images) for full list
+`docker.io/wolfyuan/dolphin:node` - Container image, where `node` represents to image that's designed for this language, see [here](#-container-images) for full list
 
 ## 📦️ Container images
 
@@ -154,7 +154,7 @@ Workflow:
 
 | ⚠️ Warning                                                                                                                                                                          |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Due to how `pyenv` switch Python version, it's recommended to presist your container storage, see [Presist data inside container](#💾-persist-data-inside-container) for more info |
+| Due to how `pyenv` switch Python version, it's recommended to presist your container storage, see [Presist data inside container](#-persist-data-inside-container) for more info |
 
 | 📝 Note                                                                                                                                                                 |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
