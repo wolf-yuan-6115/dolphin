@@ -26,3 +26,23 @@ build-image:
     - echo "GIT_SHA=$(git rev-parse --short HEAD)" >> ./.env
     - docker compose build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --push
     - docker buildx rm builder
+
+update-readme:
+  stage: build
+  tags:
+    - shiba
+  rules:
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH
+      when: never
+  image:
+    name: chko/docker-pushrm
+    entrypoint: ["/bin/sh", "-c", "/docker-pushrm"]
+  variables:
+    DOCKER_USER: $DOCKER_USER
+    DOCKER_PASS: $DOCKER_TOKEN
+    PUSHRM_SHORT: My short description
+    PUSHRM_TARGET: docker.io/$DOCKER_USER/dolphin
+    PUSHRM_DEBUG: 1
+    PUSHRM_FILE: $CI_PROJECT_DIR/README.md
+  script: "/bin/true"
