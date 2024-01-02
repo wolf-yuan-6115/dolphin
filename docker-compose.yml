@@ -1,3 +1,5 @@
+version: "3"
+
 x-base-alpine: &default-base-alpine
   build: 
     context: ./
@@ -22,6 +24,8 @@ x-node-alpine: &default-node-alpine
     dockerfile: ./nodejs/alpine.dockerfile
     platforms:
       - linux/amd64
+      - linux/arm64
+      - linux/arm/v7
   image: wolfyuan/dolphin:node-alpine
   depends_on:
     - base-alpine
