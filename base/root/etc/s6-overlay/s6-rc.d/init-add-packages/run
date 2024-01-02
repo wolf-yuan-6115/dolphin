@@ -3,30 +3,38 @@
 if [[ ! -z "${SYSTEM_PACKAGES}" ]]; then
   echo "[+] Found SYSTEM_PACKAGES"
   packages=($SYSTEM_PACKAGES)
-  mkdir -p /home/dolphin/packages
+
+  download_location="/home/dolphin/packages"
+  if [[ ! -z "${PACKAGES_DISABLE_CACHE}" ]]; then
+    export download_location="/tmp"
+  fi
+  if [[ ! -z "${PACKAGES_LOCATION}" ]]; then
+    export download_location="${PACKAGES_LOCATION}"
+  fi
+  mkdir -p $download_location
   
   OS=$(grep -E '^(ID)=' /etc/os-release)
   if [[ $OS == "ID=alpine" ]]; then
     download-command() {
       for i in "${packages[@]}"; do
-        if [[ -f "/home/dolphin/packages/${i}.apk" ]]; then
+        if [[ -f "download_location/${i}.apk" ]]; then
           echo "[-] Skipping downloading ${i}"
           continue
         fi
         echo "[+] Downloading ${i}"
-        apk fetch "${i}" --stdout > "/home/dolphin/packages/${i}.apk"
+        apk fetch "${i}" --stdout > "${download_location}/${i}.apk"
         if [ $? -eq 0 ]; then
           echo "[+] Downloaded ${i}"
         else
           echo "[x] Download ${i} failed (Wrong package name?)"
-          rm "/home/dolphin/packages/${i}.apk"
+          rm "${download_location}/${i}.apk"
           exit 1
         fi
       done
     }
     install-command() {
       for i in "${packages[@]}"; do
-        apk add --allow-untrusted --virtual runtime-dependencies "/home/dolphin/packages/${i}.apk"
+        apk add --allow-untrusted --virtual runtime-dependencies "${download_location}/${i}.apk"
       done
     }
   elif [[ $OS == "ID=ubuntu" ]]; then
@@ -35,12 +43,12 @@ if [[ ! -z "${SYSTEM_PACKAGES}" ]]; then
     }
     download-command() {
       for i in "${packages[@]}"; do
-        if [[ -f "/home/dolphin/packages/${i}.deb" ]]; then
+        if [[ -f "${download_location}/${i}.deb" ]]; then
           echo "[-] Skipping downloading ${i}"
           continue
         fi
         echo "[+] Downloading ${i}"
-        curl $(apt-get install --reinstall --print-uris -qq $i | cut -d"'" -f2) --silent --output "/home/dolphin/packages/${i}.deb"
+        curl $(apt-get install --reinstall --print-uris -qq $i | cut -d"'" -f2) --silent --output "${download_location}/${i}.deb"
         if [ $? -eq 0 ]; then
           echo "[+] Downloaded ${i}"
         else
@@ -51,7 +59,7 @@ if [[ ! -z "${SYSTEM_PACKAGES}" ]]; then
     }
     install-command() {
       for i in "${packages[@]}"; do
-        apt-get install -y "/home/dolphin/packages/${i}.deb"
+        apt-get install -y "${download_location}/${i}.deb"
       done
     }
     post-command() {
