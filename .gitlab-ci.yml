@@ -31,10 +31,8 @@ update-readme:
   stage: build
   tags:
     - shiba
-  rules:
-    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
-    - if: $CI_COMMIT_REF_NAME != $CI_DEFAULT_BRANCH
-      when: never
+  needs:
+    - build-image
   image:
     name: chko/docker-pushrm
     entrypoint: ["/bin/sh", "-c", "/docker-pushrm"]
