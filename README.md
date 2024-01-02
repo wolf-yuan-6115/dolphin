@@ -80,10 +80,12 @@ For example, pulling the `node` tag will pull the `node-ubuntu` image
 Environment variables:
 
 
-| Environment variables name |                        Description                       |
-| :------------------------: | :------------------------------------------------------: |
-|      `SYSTEM_PACKAGES`     | Additional packages to install when the container starts |
-|          `GIT_URL`         |        Git repo to clone when the container starts       |
+| Environment variables name |                         Description                        |
+| :------------------------: | :--------------------------------------------------------: |
+|      `SYSTEM_PACKAGES`     |  Additional packages to install when the container starts  |
+|     `PACKAGES_LOCATION`    |               System packages cache location               |
+|  `PACKAGES_DISABLE_CACHE`  | Disable system package cache (Set to any value to disable) |
+|          `GIT_URL`         |         Git repo to clone when the container starts        |
 
 Workflow:
 
@@ -97,8 +99,16 @@ Workflow:
 | You can install additional system packages via the `SYSTEM_PACKAGES` variable                               |
 | For example, installing `automake` on the base system, just set `SYSTEM_PACKAGES` with the value `automake` |
 | When installing multiple system packages, separate them by spaces, for example, `automake cmake`            |
-| Alpine-based image will use `apk` to install packages                                                       |
-| Ubuntu-based image will use `apt-get` to install packages                                                   |
+
+| 📝 Note                                                   |
+| --------------------------------------------------------- |
+| Alpine-based image will use `apk` to install packages     |
+| Ubuntu-based image will use `apt-get` to install packages |
+
+| 📝 Note                                                                                             |
+| --------------------------------------------------------------------------------------------------- |
+| Downloaded packages will be cached to `/home/dolphin/packages` if `PACKAGES_LOCATION` isn't changed |
+
 
 ### Image-specific options
 
