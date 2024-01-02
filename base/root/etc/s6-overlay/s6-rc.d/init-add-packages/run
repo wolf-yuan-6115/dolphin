@@ -2,18 +2,57 @@
 
 if [[ ! -z "${SYSTEM_PACKAGES}" ]]; then
   echo "[+] Found SYSTEM_PACKAGES"
+  packages=($SYSTEM_PACKAGES)
+  mkdir -p /home/dolphin/packages
   
   OS=$(grep -E '^(ID)=' /etc/os-release)
   if [[ $OS == "ID=alpine" ]]; then
+    download-command() {
+      for i in "${packages[@]}"; do
+        if [[ -f "/home/dolphin/packages/${i}.apk" ]]; then
+          echo "[-] Skipping downloading ${i}"
+          continue
+        fi
+        echo "[+] Downloading ${i}"
+        apk fetch "${i}" --stdout > "/home/dolphin/packages/${i}.apk"
+        if [ $? -eq 0 ]; then
+          echo "[+] Downloaded ${i}"
+        else
+          echo "[x] Download ${i} failed (Wrong package name?)"
+          rm "/home/dolphin/packages/${i}.apk"
+          exit 1
+        fi
+      done
+    }
     install-command() {
-      apk add --no-cache --update --virtual runtime-dependencies "$@"
+      for i in "${packages[@]}"; do
+        apk add --allow-untrusted --virtual runtime-dependencies "/home/dolphin/packages/${i}.apk"
+      done
     }
   elif [[ $OS == "ID=ubuntu" ]]; then
     pre-command() {
       apt-get update
     }
+    download-command() {
+      for i in "${packages[@]}"; do
+        if [[ -f "/home/dolphin/packages/${i}.deb" ]]; then
+          echo "[-] Skipping downloading ${i}"
+          continue
+        fi
+        echo "[+] Downloading ${i}"
+        curl $(apt-get install --reinstall --print-uris -qq $i | cut -d"'" -f2) --silent --output "/home/dolphin/packages/${i}.deb"
+        if [ $? -eq 0 ]; then
+          echo "[+] Downloaded ${i}"
+        else
+          echo "[x] Download ${i} failed (Wrong package name?)"
+          exit 1
+        fi
+      done
+    }
     install-command() {
-      apt-get install -y "$@"
+      for i in "${packages[@]}"; do
+        apt-get install -y "/home/dolphin/packages/${i}.deb"
+      done
     }
     post-command() {
       apt-get clean
@@ -24,7 +63,8 @@ if [[ ! -z "${SYSTEM_PACKAGES}" ]]; then
     pre-command
   fi
   
-  install-command $SYSTEM_PACKAGES
+  download-command
+  install-command
 
   if [[ $(declare -f post-command) ]]; then
     post-command
