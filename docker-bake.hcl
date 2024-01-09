@@ -2,6 +2,10 @@ variable "GIT_SHA" {
   default = "1234567"
 }
 
+variable "BUILD_DATE" {
+  default = "2024-01-01T00:00:00Z"
+}
+
 group "default" {
   targets = ["base-alpine", "base-ubuntu", "node-alpine", "node-ubuntu", "python-alpine", "python-ubuntu"]
 }
@@ -10,6 +14,9 @@ group "default" {
 target "base-alpine" {
   dockerfile = "./base/alpine.dockerfile"
   platforms = ["linux/amd64", "linux/arm64", "linux/arm/v7"]
+  args = {
+    BUILD_DATE = "${BUILD_DATE}"
+  }
   tags = [
     "docker.io/wolfyuan/dolphin:base-alpine",
     "docker.io/wolfyuan/dolphin:base-alpine-${GIT_SHA}",
@@ -20,6 +27,9 @@ target "base-alpine" {
 target "base-ubuntu" {
   dockerfile = "./base/ubuntu.dockerfile"
   platforms = ["linux/amd64", "linux/arm64", "linux/arm/v7"]
+  args = {
+    BUILD_DATE = "${BUILD_DATE}"
+  }
   tags = [
     "docker.io/wolfyuan/dolphin:base",
     "docker.io/wolfyuan/dolphin:base-ubuntu",
@@ -32,6 +42,9 @@ target "base-ubuntu" {
 target "node-alpine" {
   dockerfile = "./nodejs/alpine.dockerfile"
   platforms = ["linux/amd64", "linux/arm64", "linux/arm/v7"]
+  args = {
+    BUILD_DATE = "${BUILD_DATE}"
+  }
   contexts = {
     "wolfyuan/dolphin:base-alpine" = "target:base-alpine"
   }
@@ -45,6 +58,9 @@ target "node-alpine" {
 target "node-ubuntu" {
   dockerfile = "./nodejs/ubuntu.dockerfile"
   platforms = ["linux/amd64", "linux/arm64", "linux/arm/v7"]
+  args = {
+    BUILD_DATE = "${BUILD_DATE}"
+  }
   contexts = {
     "wolfyuan/dolphin:base-ubuntu" = "target:base-ubuntu"
   }
@@ -60,6 +76,9 @@ target "node-ubuntu" {
 target "python-alpine" {
   dockerfile = "./python/alpine.dockerfile"
   platforms = ["linux/amd64", "linux/arm64", "linux/arm/v7"]
+  args = {
+    BUILD_DATE = "${BUILD_DATE}"
+  }
   contexts = {
     "wolfyuan/dolphin:base-alpine" = "target:base-alpine"
   }
@@ -73,6 +92,9 @@ target "python-alpine" {
 target "python-ubuntu" {
   dockerfile = "./python/ubuntu.dockerfile"
   platforms = ["linux/amd64", "linux/arm64", "linux/arm/v7"]
+  args = {
+    BUILD_DATE = "${BUILD_DATE}"
+  }
   contexts = {
     "wolfyuan/dolphin:base-ubuntu" = "target:base-ubuntu"
   }

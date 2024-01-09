@@ -23,7 +23,7 @@ build-image:
     - docker context create builder-context
     - docker buildx create --name builder --driver docker-container --bootstrap --use builder-context
     - docker compose version
-    - GIT_SHA=$(git rev-parse --short HEAD) docker compose build --build-arg BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') --push
+    - GIT_SHA=$(git rev-parse --short HEAD) BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ') docker buildx --push
     - docker buildx rm builder
 
 update-readme:
