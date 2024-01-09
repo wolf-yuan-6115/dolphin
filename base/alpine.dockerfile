@@ -1,4 +1,3 @@
-# syntax = devthefuture/dockerfile-x
 FROM alpine:3
 
 ARG BUILD_DATE

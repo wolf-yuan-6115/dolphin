@@ -1,5 +1,4 @@
-# syntax = devthefuture/dockerfile-x
-FROM ./base/ubuntu.dockerfile
+FROM wolfyuan/dolphin:base-ubuntu
 
 ARG DEBIAN_FRONTEND="noninteractive"
 # https://github.com/pyenv/pyenv/wiki#suggested-build-environment

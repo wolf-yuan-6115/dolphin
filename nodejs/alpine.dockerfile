@@ -1,4 +1,3 @@
-# syntax = devthefuture/dockerfile-x
-FROM ./base/alpine.dockerfile
+FROM wolfyuan/dolphin:base-alpine
 
 COPY --chmod=755 ./nodejs/root /

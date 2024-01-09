@@ -1,5 +1,4 @@
-# syntax = devthefuture/dockerfile-x
-FROM ./base/alpine.dockerfile
+FROM wolfyuan/dolphin:base-alpine
 
 # https://github.com/pyenv/pyenv/wiki#suggested-build-environment
 RUN apk add --update --no-cache --virtual build-dependencies \

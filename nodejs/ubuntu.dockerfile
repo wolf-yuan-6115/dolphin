@@ -1,4 +1,3 @@
-# syntax = devthefuture/dockerfile-x
-FROM ./base/ubuntu.dockerfile
+FROM wolfyuan/dolphin:base-ubuntu
 
 COPY --chmod=755 ./nodejs/root /

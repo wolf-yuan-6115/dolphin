@@ -1,4 +1,3 @@
-# syntax = devthefuture/dockerfile-x
 FROM ubuntu:lunar
 
 ARG BUILD_DATE
