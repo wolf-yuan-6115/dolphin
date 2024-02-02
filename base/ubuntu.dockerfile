@@ -1,4 +1,4 @@
-FROM ubuntu:lunar
+FROM ubuntu:mantic-20240122
 
 ARG BUILD_DATE
 LABEL org.label-schema.schema-version="1.0"
