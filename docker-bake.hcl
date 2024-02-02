@@ -10,99 +10,83 @@ group "default" {
   targets = ["base-alpine", "base-ubuntu", "node-alpine", "node-ubuntu", "python-alpine", "python-ubuntu"]
 }
 
+function "getPlatforms" {
+  params = []
+  result = ["linux/amd64", "linux/arm64", "linux/arm/v7"]
+}
 
-target "base-alpine" {
-  dockerfile = "./base/alpine.dockerfile"
-  platforms = ["linux/amd64", "linux/arm64", "linux/arm/v7"]
+function "generateTags" {
+  params = [
+    imageName,
+    imageBase,
+    isMain
+  ]
+  result = flatten([
+    concat(
+      [
+        "docker.io/wolfyuan/dolphin:${imageName}-${imageBase}",
+        "docker.io/wolfyuan/dolphin:${imageName}-${imageBase}-${GIT_SHA}",
+        "registry.gitlab.com/wolf-yuan/dolphin:${imageName}-${imageBase}"
+      ],
+      isMain == "true" ? [
+        "docker.io/wolfyuan/dolphin:${imageName}",
+        "registry.gitlab.com/wolf-yuan/dolphin:${imageName}"
+      ] : []
+    )
+  ])
+}
+
+target "_default" {
+  platforms = getPlatforms()
   args = {
     BUILD_DATE = "${BUILD_DATE}"
   }
-  tags = [
-    "docker.io/wolfyuan/dolphin:base-alpine",
-    "docker.io/wolfyuan/dolphin:base-alpine-${GIT_SHA}",
-    "registry.gitlab.com/wolf-yuan/dolphin:base-alpine"
-  ]
+}
+
+target "base-alpine" {
+  inherits = ["_default"]
+  dockerfile = "./base/alpine.dockerfile"
+  tags = generateTags("base", "alpine", "false")
 }
 
 target "base-ubuntu" {
+  inherits = ["_default"]
   dockerfile = "./base/ubuntu.dockerfile"
-  platforms = ["linux/amd64", "linux/arm64", "linux/arm/v7"]
-  args = {
-    BUILD_DATE = "${BUILD_DATE}"
-  }
-  tags = [
-    "docker.io/wolfyuan/dolphin:base",
-    "docker.io/wolfyuan/dolphin:base-ubuntu",
-    "docker.io/wolfyuan/dolphin:base-ubuntu-${GIT_SHA}",
-    "registry.gitlab.com/wolf-yuan/dolphin:base",
-    "registry.gitlab.com/wolf-yuan/dolphin:base-ubuntu"
-  ]
+  tags = generateTags("base", "alpine", "true")
 }
 
 target "node-alpine" {
+  inherits = ["_default"]
   dockerfile = "./nodejs/alpine.dockerfile"
-  platforms = ["linux/amd64", "linux/arm64", "linux/arm/v7"]
-  args = {
-    BUILD_DATE = "${BUILD_DATE}"
-  }
   contexts = {
     "wolfyuan/dolphin:base-alpine" = "target:base-alpine"
   }
-  tags = [
-    "docker.io/wolfyuan/dolphin:node-alpine",
-    "docker.io/wolfyuan/dolphin:node-alpine-${GIT_SHA}",
-    "registry.gitlab.com/wolf-yuan/dolphin:node-alpine"
-  ]
+  tags = generateTags("node", "alpine", "false")
 }
 
 target "node-ubuntu" {
+  inherits = ["_default"]
   dockerfile = "./nodejs/ubuntu.dockerfile"
-  platforms = ["linux/amd64", "linux/arm64", "linux/arm/v7"]
-  args = {
-    BUILD_DATE = "${BUILD_DATE}"
-  }
   contexts = {
     "wolfyuan/dolphin:base-ubuntu" = "target:base-ubuntu"
   }
-  tags = [
-    "docker.io/wolfyuan/dolphin:node",
-    "docker.io/wolfyuan/dolphin:node-ubuntu",
-    "docker.io/wolfyuan/dolphin:node-ubuntu-${GIT_SHA}",
-    "registry.gitlab.com/wolf-yuan/dolphin:node",
-    "registry.gitlab.com/wolf-yuan/dolphin:node-ubuntu"
-  ]
+  tags = generateTags("node", "ubuntu", "true")
 }
 
 target "python-alpine" {
+  inherits = ["_default"]
   dockerfile = "./python/alpine.dockerfile"
-  platforms = ["linux/amd64", "linux/arm64", "linux/arm/v7"]
-  args = {
-    BUILD_DATE = "${BUILD_DATE}"
-  }
   contexts = {
     "wolfyuan/dolphin:base-alpine" = "target:base-alpine"
   }
-  tags = [
-    "docker.io/wolfyuan/dolphin:python-alpine",
-    "docker.io/wolfyuan/dolphin:python-alpine-${GIT_SHA}",
-    "registry.gitlab.com/wolf-yuan/dolphin:python-alpine"
-  ]
+  tags = generateTags("python", "alpine", "false")
 }
 
 target "python-ubuntu" {
+  inherits = ["_default"]
   dockerfile = "./python/ubuntu.dockerfile"
-  platforms = ["linux/amd64", "linux/arm64", "linux/arm/v7"]
-  args = {
-    BUILD_DATE = "${BUILD_DATE}"
-  }
   contexts = {
     "wolfyuan/dolphin:base-ubuntu" = "target:base-ubuntu"
   }
-  tags = [
-    "docker.io/wolfyuan/dolphin:python",
-    "docker.io/wolfyuan/dolphin:python-ubuntu",
-    "docker.io/wolfyuan/dolphin:python-ubuntu-${GIT_SHA}",
-    "registry.gitlab.com/wolf-yuan/dolphin:python",
-    "registry.gitlab.com/wolf-yuan/dolphin:python-ubuntu"
-  ]
+  tags = generateTags("python", "ubuntu", "true")
 }
